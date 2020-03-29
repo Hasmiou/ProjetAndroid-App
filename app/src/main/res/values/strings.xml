@@ -8,7 +8,6 @@
     <string name="action_settings">Settings</string>
 
 
-
     <string-array name="etat_array">
         <item>Neuf</item>
         <item>Bon</item>
@@ -32,7 +31,6 @@
         <item>Proverbe</item>
         <item>Cuisine</item>
     </string-array>
-
 
 
     <string-array name="type_electronique_array">
@@ -71,7 +69,6 @@
         <item>Jeux Video</item>
         <item>Film</item>
     </string-array>
-
 
 
 </resources>
