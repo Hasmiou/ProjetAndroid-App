@@ -314,7 +314,7 @@ public class AjouterProduit extends AppCompatActivity implements AdapterView.OnI
         protected Void doInBackground(Void... arg0) {
 
             String fileName = uploadFilePath;
-
+            product.setPath(uploadFilePath);
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
             String lineEnd = "\r\n";
@@ -333,7 +333,7 @@ public class AjouterProduit extends AppCompatActivity implements AdapterView.OnI
             else {
                 Log.e("path", uploadFilePath);
                 try {
-                    Log.e("mohsine2", "mohsine2");
+
                     // open a URL connection to the Servlet
                     FileInputStream fileInputStream = new FileInputStream(sourceFile);
                     URL url = new URL(upLoadServerUri);

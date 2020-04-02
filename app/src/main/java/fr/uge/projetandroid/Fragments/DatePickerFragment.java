@@ -1,4 +1,4 @@
-package fr.uge.projetandroid;
+package fr.uge.projetandroid.Fragments;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;

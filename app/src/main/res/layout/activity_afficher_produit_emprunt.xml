@@ -76,10 +76,17 @@
                     android:textSize="30sp" />
 
                 <ImageView
-                    android:id="@+id/imageView_ratingstar"
+                    android:id="@+id/imageView_ratingstar_emprunt"
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
                     app:srcCompat="@drawable/s45" />
+
+                <TextView
+                    android:id="@+id/textView_etat_produit_emprunt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Neuf"
+                    android:textAlignment="center" />
 
             </LinearLayout>
 
@@ -122,8 +129,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="Veuillez sélectionner la date debut et fin"
+                    android:layout_marginBottom="7dp"
+                    android:text='Veuillez cliquer sur "DATE" et "HEURE"'
                     android:textColor="@color/colorPrimary"
                     android:textSize="18sp" />
 
@@ -143,9 +150,9 @@
 
                     <TextView
                         android:id="@+id/textView18sssdsdsdsd"
-                        android:layout_width="wrap_content"
+                        android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         android:text="Debut"
                         android:textColor="@color/colorPrimary"
@@ -184,18 +191,18 @@
 
                     <TextView
                         android:id="@+id/textView18sssdsdsdsdss"
-                        android:layout_width="wrap_content"
+                        android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:text="Fin  "
+                        android:text="Fin"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
 
                     <Button
                         android:id="@+id/button_dateFin_emprunt"
                         android:layout_width="60dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="Date" />
 
@@ -216,7 +223,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginBottom="4dp"
                     android:background="@color/colorPrimary"
-                    android:text="Ajouter"
+                    android:text="Emprunter"
                     android:textColor="@color/colorRatingStarBackground" />
 
             </LinearLayout>
@@ -269,7 +276,7 @@
 
 
             <LinearLayout
-                android:id="@+id/layout_saisirDate_DemandeEmprunt"
+                android:id="@+id/layout_saisirDate_Demande_emprunt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
@@ -279,85 +286,99 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView11assqssss"
+                    android:id="@+id/textView11assrq"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="Veuillez saisir la date debut et fin"
+                    android:layout_marginBottom="7dp"
+                    android:text='Veuillez cliquer sur "DATE" et "HEURE"'
                     android:textColor="@color/colorPrimary"
                     android:textSize="18sp" />
 
 
                 <LinearLayout
-                    android:id="@+id/linearLayout11zzqqqq"
+                    android:id="@+id/linearLayout11zzqqaqq"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@android:color/background_light"
+                    android:background="@color/colorRatingStarBackground"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
-                        android:id="@+id/textView18sssdsdsdmsd"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView18sssdsdsdsqsqd"
+                        android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:text="Debut "
+                        android:text="Debut"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
 
-                    <EditText
-                        android:id="@+id/editText_datedebut_Demandeemprunt"
-                        android:layout_width="280dp"
-                        android:layout_height="match_parent"
-                        android:ems="10"
-                        android:inputType="date" />
+                    <Button
+                        android:id="@+id/button_dateDebut_Demande_emprunt"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Date" />
+
+                    <Button
+                        android:id="@+id/button_heureDebut_Demande_emprunt"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Heure" />
 
 
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:id="@+id/linearLayout11zsssssszdds"
+                    android:id="@+id/linearLayout11zzqqqdssfsfs"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@android:color/background_light"
+                    android:background="@color/colorRatingStarBackground"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <TextView
-                        android:id="@+id/textView18ssswqwd"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView18sssdsdsddsdss"
+                        android:layout_width="45dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:text="Fin "
+                        android:text="Fin"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
 
-                    <EditText
-                        android:id="@+id/editText_datefin_empruntDemande"
-                        android:layout_width="280dp"
+                    <Button
+                        android:id="@+id/button_dateFin_Demande_emprunt"
+                        android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:ems="10"
-                        android:inputType="date" />
+                        android:layout_weight="1"
+                        android:text="Date" />
+
+                    <Button
+                        android:id="@+id/button_heureFin_Demande_emprunt"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Heure" />
 
 
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/button_nouveau_DemandeEmprunt"
+                    android:id="@+id/button_nouveau_Demande_emprunt"
                     android:layout_width="105dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="8dp"
@@ -500,7 +521,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/textView_description_prpduit_emprunt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
@@ -529,7 +550,7 @@
                     android:textSize="18sp" />
 
                 <ListView
-                    android:id="@+id/listavis"
+                    android:id="@+id/listView_listAvis"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
