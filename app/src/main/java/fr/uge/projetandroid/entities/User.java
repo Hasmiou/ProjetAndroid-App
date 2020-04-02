@@ -23,7 +23,7 @@ public class User {
 
 
     private String updatedAt;
-    
+
 
     private String updatedBy;
 
