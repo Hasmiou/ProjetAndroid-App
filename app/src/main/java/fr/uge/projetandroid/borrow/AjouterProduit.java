@@ -1,4 +1,4 @@
-package fr.uge.projetandroid;
+package fr.uge.projetandroid.borrow;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -23,10 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -43,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import fr.uge.projetandroid.R;
 import fr.uge.projetandroid.entities.Product;
 
 public class AjouterProduit extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

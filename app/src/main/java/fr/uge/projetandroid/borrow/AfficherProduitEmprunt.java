@@ -1,4 +1,4 @@
-package fr.uge.projetandroid;
+package fr.uge.projetandroid.borrow;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -39,10 +38,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Vector;
 
 import fr.uge.projetandroid.Fragments.DatePickerFragment;
 import fr.uge.projetandroid.Fragments.TimePickerFragment;
+import fr.uge.projetandroid.HttpHandler;
+import fr.uge.projetandroid.R;
 import fr.uge.projetandroid.adapters.AdapterComment;
 import fr.uge.projetandroid.entities.Borrow;
 import fr.uge.projetandroid.entities.Comment;

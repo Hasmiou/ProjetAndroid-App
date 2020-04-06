@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,21 +16,24 @@ import java.util.List;
 
 import fr.uge.projetandroid.borrow.AfficherProduitEmprunt;
 import fr.uge.projetandroid.R;
+import fr.uge.projetandroid.entities.Borrow;
 import fr.uge.projetandroid.entities.Product;
 
-public class AdapterCatalogueProduitsEmprunt  extends RecyclerView.Adapter<AdapterCatalogueProduitsEmprunt.ViewHolder> {
+public class AdapterPanierEmprunt extends RecyclerView.Adapter<AdapterPanierEmprunt.ViewHolder> {
 
     private List<Product> results;
+    private List<Borrow> borrows;
 
-
-    public AdapterCatalogueProduitsEmprunt(List<Product> results) {
+    public AdapterPanierEmprunt(List<Product> results, List<Borrow> borrows) {
         this.results = results;
+        this.borrows = borrows;
     }
+
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.items_produits_emprunt, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_produit_ajouter_emprunt, viewGroup, false));
     }
 
     @Override
@@ -48,33 +52,39 @@ public class AdapterCatalogueProduitsEmprunt  extends RecyclerView.Adapter<Adapt
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView textView_nomProduit_catalogue_emprunt;
-        private TextView textView_etatProduit_catalogue_emprunt;
-        private ImageView imageView_ratingStar_catalogue_emprunt;
-        private ImageView imageView_image_catalogue_emprunt;
+        private TextView textView_nomProduit_panier_emprunt;
+        private TextView textView_debutEmprunt_panier_emprunt;
+        private TextView textView_finEmprunt_panier_emprunt;
+        private ImageView imageView_imageProduit_panier_emprunt;
+        private Button button_retouner_panier_emprunt ;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView_nomProduit_catalogue_emprunt = itemView.findViewById(R.id.textView_nomProduit_catalogue_emprunt);
-            textView_etatProduit_catalogue_emprunt = itemView.findViewById(R.id.textView_etatProduit_catalogue_emprunt);
-            imageView_ratingStar_catalogue_emprunt = itemView.findViewById(R.id.imageView_ratingStar_catalogue_emprunt);
-            imageView_image_catalogue_emprunt = itemView.findViewById(R.id.imageView_image_catalogue_emprunt);
+            textView_nomProduit_panier_emprunt = itemView.findViewById(R.id.textView_nomProduit_panier_emprunt);
+            textView_debutEmprunt_panier_emprunt = itemView.findViewById(R.id.textView_debutEmprunt_panier_emprunt);
+            textView_finEmprunt_panier_emprunt = itemView.findViewById(R.id.textView_finEmprunt_panier_emprunt);
+            imageView_imageProduit_panier_emprunt = itemView.findViewById(R.id.imageView_imageProduit_panier_emprunt);
+            button_retouner_panier_emprunt = itemView.findViewById(R.id.button_retouner_panier_emprunt);
         }
 
         public void update(final Product entity){
 
-            textView_nomProduit_catalogue_emprunt.setText(entity.getName());
-            textView_etatProduit_catalogue_emprunt.setText(entity.getState());
+            Borrow borrow = getBorrowByProduct(entity.getId());
+            if(borrow!=null){
 
-            setImageRatingStar(imageView_ratingStar_catalogue_emprunt, entity.getRate());
+                textView_nomProduit_panier_emprunt.setText(entity.getName());
+                textView_debutEmprunt_panier_emprunt.setText(borrow.getStartAt());
+                textView_finEmprunt_panier_emprunt.setText(borrow.getEndAt());
 
-            Picasso.get().load(entity.getPath())
-                    .resize(600, 600)
+
+                Picasso.get().load(entity.getPath())
+                    .resize(150, 150)
                     .centerCrop()
                     .error(R.drawable.erreurpicture)
-                    .into(imageView_image_catalogue_emprunt);
+                    .into(imageView_imageProduit_panier_emprunt);
 
-            imageView_image_catalogue_emprunt.setOnClickListener(new View.OnClickListener(){
+                imageView_imageProduit_panier_emprunt.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     Intent myIntent = new Intent(v.getContext(), AfficherProduitEmprunt.class);
                     myIntent.putExtra("idProduct",entity.getId()+"");
@@ -82,13 +92,23 @@ public class AdapterCatalogueProduitsEmprunt  extends RecyclerView.Adapter<Adapt
                 }
             });
 
-            textView_nomProduit_catalogue_emprunt.setOnClickListener(new View.OnClickListener(){
+                textView_nomProduit_panier_emprunt.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     Intent myIntent = new Intent(v.getContext(), AfficherProduitEmprunt.class);
                     myIntent.putExtra("idProduct",entity.getId()+"");
                     v.getContext().startActivity(myIntent);
                 }
             });
+
+                button_retouner_panier_emprunt.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    Intent myIntent = new Intent(v.getContext(), AfficherProduitEmprunt.class);
+                    myIntent.putExtra("idProduct",entity.getId()+"");
+                    v.getContext().startActivity(myIntent);
+                }
+            });
+            }
+
 
         }
     }
@@ -131,6 +151,13 @@ public class AdapterCatalogueProduitsEmprunt  extends RecyclerView.Adapter<Adapt
             default:
                 imageView.setImageResource(R.drawable.s0);
         }
+    }
+
+    public Borrow getBorrowByProduct(long idProduct){
+        for(Borrow borrow: borrows ){
+            if(borrow.getProduct()==idProduct) return borrow;
+        }
+        return null;
     }
 
 
