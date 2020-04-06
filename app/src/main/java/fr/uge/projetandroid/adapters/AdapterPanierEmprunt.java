@@ -3,6 +3,7 @@ package fr.uge.projetandroid.adapters;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class AdapterPanierEmprunt extends RecyclerView.Adapter<AdapterPanierEmpr
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_produit_ajouter_emprunt, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_produits_panier_emprunt, viewGroup, false));
     }
 
     @Override
@@ -72,7 +73,9 @@ public class AdapterPanierEmprunt extends RecyclerView.Adapter<AdapterPanierEmpr
 
             Borrow borrow = getBorrowByProduct(entity.getId());
             if(borrow!=null){
-
+                Log.e("NomProduit",entity.getName());
+                Log.e("getStartAt",borrow.getStartAt());
+                Log.e("getEndAt",borrow.getEndAt());
                 textView_nomProduit_panier_emprunt.setText(entity.getName());
                 textView_debutEmprunt_panier_emprunt.setText(borrow.getStartAt());
                 textView_finEmprunt_panier_emprunt.setText(borrow.getEndAt());

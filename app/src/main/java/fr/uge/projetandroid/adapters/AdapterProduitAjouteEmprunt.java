@@ -18,12 +18,12 @@ import fr.uge.projetandroid.borrow.AfficherProduitEmprunt;
 import fr.uge.projetandroid.R;
 import fr.uge.projetandroid.entities.Product;
 
-public class AdapaterProduitAjouteEmprunt extends RecyclerView.Adapter<AdapaterProduitAjouteEmprunt.ViewHolder> {
+public class AdapterProduitAjouteEmprunt extends RecyclerView.Adapter<AdapterProduitAjouteEmprunt.ViewHolder> {
 
     private List<Product> results;
 
 
-    public AdapaterProduitAjouteEmprunt(List<Product> results) {
+    public AdapterProduitAjouteEmprunt(List<Product> results) {
         this.results = results;
     }
 

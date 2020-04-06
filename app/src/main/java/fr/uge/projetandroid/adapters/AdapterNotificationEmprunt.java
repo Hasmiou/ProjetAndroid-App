@@ -32,7 +32,7 @@ public class AdapterNotificationEmprunt extends RecyclerView.Adapter<AdapterNoti
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_produit_ajouter_emprunt, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_notification_emprunt, viewGroup, false));
     }
 
     @Override

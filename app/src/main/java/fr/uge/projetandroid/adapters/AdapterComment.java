@@ -68,10 +68,8 @@ public class AdapterComment  extends RecyclerView.Adapter<AdapterComment.ViewHol
 
         public void update(Comment entity){
 
-            //if(!oldResult.containsKey(entity.getCreatedAt())) {
 
-                if (entity.getUser() != null) {
-                    String utilisateur = entity.getUser().getFirstName() + " " + entity.getUser().getLastName();
+                    String utilisateur = entity.getFirstName() + " " + entity.getLastName();
 
                     //String utilisateur = entity.getUser().getFirstName() + " " + entity.getUser().getLastName();
 
@@ -82,10 +80,10 @@ public class AdapterComment  extends RecyclerView.Adapter<AdapterComment.ViewHol
                     Comment c = entity;
                     Log.e("mohsine", "Rate :" + c.getRate() + " / " + " user : " + utilisateur + " content : " + c.getContent());
                     //oldResult.put(entity.getCreatedAt() ,entity);
-                }
 
 
-            //}
+
+
         }
     }
 
