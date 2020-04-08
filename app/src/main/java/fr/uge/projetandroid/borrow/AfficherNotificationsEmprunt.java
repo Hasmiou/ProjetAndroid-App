@@ -3,9 +3,7 @@ package fr.uge.projetandroid.borrow;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -30,12 +27,8 @@ import java.util.List;
 import fr.uge.projetandroid.HttpHandler;
 import fr.uge.projetandroid.MainActivity;
 import fr.uge.projetandroid.R;
-import fr.uge.projetandroid.adapters.AdapterCatalogueProduitsEmprunt;
 import fr.uge.projetandroid.adapters.AdapterNotificationEmprunt;
-import fr.uge.projetandroid.adapters.AdapterPanierEmprunt;
-import fr.uge.projetandroid.entities.Borrow;
 import fr.uge.projetandroid.entities.Notification;
-import fr.uge.projetandroid.entities.Product;
 
 public class AfficherNotificationsEmprunt extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -79,7 +72,7 @@ public class AfficherNotificationsEmprunt extends AppCompatActivity implements N
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_emprunt, menu);
         return true;
     }
 

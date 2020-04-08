@@ -4,7 +4,7 @@
 
 
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/item_search_emprunt"
         android:icon="@drawable/ic_search_black_30dp"
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
@@ -18,12 +18,11 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/item_panier_emprunt"
+        android:id="@+id/item_nombre_panier_emprunt"
         android:icon="@drawable/ic_shopping_cart_black_24dp"
-        android:title="Notification"
+        android:title="Panier"
         app:actionLayout="@layout/custom_panier_emprunt_item_layout"
         app:showAsAction="always"/>
-
 
 
 

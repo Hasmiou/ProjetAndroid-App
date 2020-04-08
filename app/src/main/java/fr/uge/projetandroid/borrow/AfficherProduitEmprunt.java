@@ -141,7 +141,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afficher_produit_emprunt);
 
-        Intent myIntent = getIntent(); // gets the previously created intent
+        Intent myIntent = getIntent();
         String idProduct = myIntent.getStringExtra("idProduct");
 
         product = new Product();

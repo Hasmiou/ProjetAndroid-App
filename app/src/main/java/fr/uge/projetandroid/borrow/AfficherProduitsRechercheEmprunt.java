@@ -28,21 +28,27 @@ import fr.uge.projetandroid.HttpHandler;
 import fr.uge.projetandroid.MainActivity;
 import fr.uge.projetandroid.R;
 import fr.uge.projetandroid.adapters.AdapterCatalogueProduitsEmprunt;
+import fr.uge.projetandroid.adapters.AdapterProduitsRechercheEmprunt;
 import fr.uge.projetandroid.entities.Product;
 
-public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AfficherProduitsRechercheEmprunt extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private RecyclerView RecyclerView_CatalogueProduit_Bibliotheque_Emprunt;
-    private RecyclerView RecyclerView_CatalogueProduit_Electronique_Emprunt;
-    private RecyclerView RecyclerView_CatalogueProduit_ModeVetement_Emprunt;
+    private RecyclerView RecyclerView_produit_recherche_Emprunt;
+    private String keyword;
+
     private ProgressDialog pDialog;
-    private String TAG = AfficherProduitEmprunt.class.getSimpleName();
+    private String TAG = AfficherProduitsRechercheEmprunt.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_afficher_catalogue_produits_emprunt);
+        setContentView(R.layout.activity_afficher_produits_recherche_emprunt);
 
+
+        Intent myIntent = getIntent();
+        keyword = myIntent.getStringExtra("Keyword");
+
+        RecyclerView_produit_recherche_Emprunt = (RecyclerView)findViewById(R.id.RecyclerView_produit_recherche_Emprunt);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,8 +62,8 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        initUi();
-        new AfficherCatalogueProduitsEmprunt.ShowProductsTask().execute();
+
+        new AfficherProduitsRechercheEmprunt.ShowProductsTask().execute();
     }
 
 
@@ -125,28 +131,19 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
         return true;
     }
 
-    private void initUi(){
-        RecyclerView_CatalogueProduit_Bibliotheque_Emprunt = (RecyclerView)findViewById(R.id.RecyclerView_CatalogueProduit_Bibliotheque_Emprunt);
-        //RecyclerView_CatalogueProduit_Electronique_Emprunt = (RecyclerView)findViewById(R.id.RecyclerView_CatalogueProduit_Electronique_Emprunt);
-        //RecyclerView_CatalogueProduit_ModeVetement_Emprunt = (RecyclerView)findViewById(R.id.RecyclerView_CatalogueProduit_ModeVetement_Emprunt);
-    }
-
     private class ShowProductsTask extends AsyncTask<Void, Void, Void> {
 
-        List<Product> produitsBibliotheque;
-        List<Product> produitsElectronique;
-        List<Product> produitsModeVetements;
+        List<Product> products;
+
 
         public ShowProductsTask() {
-            produitsBibliotheque = new ArrayList<>();
-            produitsElectronique = new ArrayList<>();
-            produitsModeVetements = new ArrayList<>();
+            products = new ArrayList<>();
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(AfficherCatalogueProduitsEmprunt.this);
+            pDialog = new ProgressDialog(AfficherProduitsRechercheEmprunt.this);
             pDialog.setMessage("Chargement des produits...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -155,17 +152,9 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            produitsBibliotheque = getProductsBycategory("Electronique");
-           // produitsElectronique = getProductsBycategory("Electronique");
-           // produitsModeVetements = getProductsBycategory("eau");
-            return null;
-        }
 
-        protected List<Product> getProductsBycategory(String category){
-            List<Product> resultats= new ArrayList<>();
-            //String url = "http://uge-webservice.herokuapp.com/api/product/category/"+category+"/";
-            //String url = "http://uge-webservice.herokuapp.com/api/product/category/Electronique/";
-            String url = "http://uge-webservice.herokuapp.com/api/product/";
+
+            String url = "http://uge-webservice.herokuapp.com/api/product/key/"+keyword;
             HttpHandler sh = new HttpHandler();
             String jsonStr = sh.makeServiceCall(url);
 
@@ -190,7 +179,7 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
                         product.setCreatedAt(jsonObj.getString("createdAt"));
                         product.setPath(jsonObj.getString("path"));
                         product.setRate(jsonObj.getInt("avgRate"));
-                        resultats.add(product);
+                        products.add(product);
                     }
 
 
@@ -221,8 +210,9 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
 
             }
 
-            return resultats;
+            return null;
         }
+
 
         @Override
         protected void onPostExecute(Void result) {
@@ -231,17 +221,12 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
-            AdapterCatalogueProduitsEmprunt adapterBibliotheque = new AdapterCatalogueProduitsEmprunt(produitsBibliotheque);
-           // AdapterCatalogueProduitsEmprunt adapterElectronique = new AdapterCatalogueProduitsEmprunt(produitsElectronique);
-            //AdapterCatalogueProduitsEmprunt adapterModeVetement = new AdapterCatalogueProduitsEmprunt(produitsModeVetements);
+            AdapterProduitsRechercheEmprunt adapterProduitsRechercheEmprunt  = new AdapterProduitsRechercheEmprunt(products);
 
-            RecyclerView_CatalogueProduit_Bibliotheque_Emprunt.setLayoutManager(new LinearLayoutManager(AfficherCatalogueProduitsEmprunt.this));
-            //RecyclerView_CatalogueProduit_Electronique_Emprunt.setLayoutManager(new LinearLayoutManager(AfficherCatalogueProduitsEmprunt.this));
-            //RecyclerView_CatalogueProduit_ModeVetement_Emprunt.setLayoutManager(new LinearLayoutManager(AfficherCatalogueProduitsEmprunt.this));
+            RecyclerView_produit_recherche_Emprunt.setLayoutManager(new LinearLayoutManager(AfficherProduitsRechercheEmprunt.this));
 
-            RecyclerView_CatalogueProduit_Bibliotheque_Emprunt.setAdapter(adapterBibliotheque);
-            //RecyclerView_CatalogueProduit_Electronique_Emprunt.setAdapter(adapterElectronique);
-            //RecyclerView_CatalogueProduit_ModeVetement_Emprunt.setAdapter(adapterModeVetement);
+            RecyclerView_produit_recherche_Emprunt.setAdapter(adapterProduitsRechercheEmprunt);
+
         }
 
     }
