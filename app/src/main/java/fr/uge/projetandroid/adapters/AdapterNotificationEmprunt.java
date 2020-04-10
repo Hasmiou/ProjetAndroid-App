@@ -1,6 +1,7 @@
 package fr.uge.projetandroid.adapters;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -55,6 +57,7 @@ public class AdapterNotificationEmprunt extends RecyclerView.Adapter<AdapterNoti
         private TextView textView_date_notifications_emprunt;
         private ImageView imageView_imageProduit_notifications_emprunt;
         private Button button_emprunter_notifications_emprunt ;
+        private LinearLayout LinearLayout_notification_emprunt;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -63,6 +66,7 @@ public class AdapterNotificationEmprunt extends RecyclerView.Adapter<AdapterNoti
             textView_date_notifications_emprunt = itemView.findViewById(R.id.textView_date_notifications_emprunt);
             imageView_imageProduit_notifications_emprunt = itemView.findViewById(R.id.imageView_imageProduit_notifications_emprunt);
             button_emprunter_notifications_emprunt = itemView.findViewById(R.id.button_emprunter_notifications_emprunt);
+            LinearLayout_notification_emprunt= itemView.findViewById(R.id.LinearLayout_notification_emprunt);
         }
 
         public void update(final Notification entity){
@@ -70,6 +74,14 @@ public class AdapterNotificationEmprunt extends RecyclerView.Adapter<AdapterNoti
 
                 textView_message_notifications_emprunt.setText(entity.getMessage());
                 textView_date_notifications_emprunt.setText(entity.getCreatedAt());
+
+
+                if(entity.isRead()){
+                    LinearLayout_notification_emprunt.setBackgroundResource(R.drawable.costum_background_notification_old);
+                }
+                else{
+                    LinearLayout_notification_emprunt.setBackgroundResource(R.drawable.costum_background_notification_new);
+                }
 
 
 
@@ -83,6 +95,8 @@ public class AdapterNotificationEmprunt extends RecyclerView.Adapter<AdapterNoti
                     public void onClick(View v){
                         Intent myIntent = new Intent(v.getContext(), AfficherProduitEmprunt.class);
                         myIntent.putExtra("idProduct",entity.getProduct()+"");
+                        myIntent.putExtra("idNotification",entity.getId());
+                        myIntent.putExtra("readNotification",entity.isRead());
                         v.getContext().startActivity(myIntent);
                     }
                 });
@@ -91,6 +105,8 @@ public class AdapterNotificationEmprunt extends RecyclerView.Adapter<AdapterNoti
                     public void onClick(View v){
                         Intent myIntent = new Intent(v.getContext(), AfficherProduitEmprunt.class);
                         myIntent.putExtra("idProduct",entity.getProduct()+"");
+                        myIntent.putExtra("idNotification",entity.getId());
+                        myIntent.putExtra("readNotification",entity.isRead());
                         v.getContext().startActivity(myIntent);
                     }
                 });
@@ -99,6 +115,8 @@ public class AdapterNotificationEmprunt extends RecyclerView.Adapter<AdapterNoti
                     public void onClick(View v){
                         Intent myIntent = new Intent(v.getContext(), AfficherProduitEmprunt.class);
                         myIntent.putExtra("idProduct",entity.getProduct()+"");
+                        myIntent.putExtra("idNotification",entity.getId());
+                        myIntent.putExtra("readNotification",entity.isRead());
                         v.getContext().startActivity(myIntent);
                     }
                 });

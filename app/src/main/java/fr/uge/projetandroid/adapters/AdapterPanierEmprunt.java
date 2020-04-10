@@ -1,7 +1,10 @@
 package fr.uge.projetandroid.adapters;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,11 +22,16 @@ import fr.uge.projetandroid.borrow.AfficherProduitEmprunt;
 import fr.uge.projetandroid.R;
 import fr.uge.projetandroid.entities.Borrow;
 import fr.uge.projetandroid.entities.Product;
+import fr.uge.projetandroid.messages.ProduitRetourne;
 
 public class AdapterPanierEmprunt extends RecyclerView.Adapter<AdapterPanierEmprunt.ViewHolder> {
 
     private List<Product> results;
     private List<Borrow> borrows;
+    private int itemSelected = 0;
+    private long idProduct;
+    private String[] etats;
+    private Context context;
 
     public AdapterPanierEmprunt(List<Product> results, List<Borrow> borrows) {
         this.results = results;
@@ -105,9 +113,9 @@ public class AdapterPanierEmprunt extends RecyclerView.Adapter<AdapterPanierEmpr
 
                 button_retouner_panier_emprunt.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
-                    Intent myIntent = new Intent(v.getContext(), AfficherProduitEmprunt.class);
-                    myIntent.putExtra("idProduct",entity.getId()+"");
-                    v.getContext().startActivity(myIntent);
+                    context=v.getContext();
+                    idProduct=entity.getId();
+                    showDialog();
                 }
             });
             }
@@ -161,6 +169,35 @@ public class AdapterPanierEmprunt extends RecyclerView.Adapter<AdapterPanierEmpr
             if(borrow.getProduct()==idProduct) return borrow;
         }
         return null;
+    }
+
+
+    public void showDialog() {
+        String[] singleChoiceItems = context.getResources().getStringArray(R.array.etat_produit_array);
+        etats = singleChoiceItems;
+        new AlertDialog.Builder(context)
+                .setTitle("Veuillez choisir l'état du produit actuel")
+                .setSingleChoiceItems(singleChoiceItems, itemSelected, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int selectedIndex) {
+                        itemSelected=selectedIndex;
+                        Log.e("Etat  ",selectedIndex+"");
+
+                    }
+
+                })
+                .setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.e("Etat 2 ",etats[itemSelected]);
+                        Intent myIntent = new Intent(context, ProduitRetourne.class);
+                        myIntent.putExtra("idProduct",idProduct);
+                        myIntent.putExtra("etat",etats[itemSelected]);
+                        context.startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Annuler", null)
+                .show();
     }
 
 
