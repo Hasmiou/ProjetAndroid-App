@@ -21,6 +21,7 @@ import fr.uge.projetandroid.borrow.AfficherMesProduitsEmprunte;
 import fr.uge.projetandroid.borrow.AfficherProduitEmprunt;
 import fr.uge.projetandroid.borrow.AfficherProduitsRechercheEmprunt;
 import fr.uge.projetandroid.borrow.AjouterProduit;
+import fr.uge.projetandroid.borrow.Emprunter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -184,11 +185,13 @@ public class MainActivity extends AppCompatActivity
             startActivity(myIntent);
 
         } else if (id == R.id.nav__emprunt_emprunter) {
-            Intent myIntent = new Intent(this, AfficherMesProduitsEmprunte.class);
+            Intent myIntent = new Intent(this, Emprunter.class);
             startActivity(myIntent);
 
         } else if (id == R.id.nav__emprunt_mesproduits) {
-            Intent myIntent = new Intent(this, AfficherProduitAjoute.class);
+
+
+            Intent myIntent = new Intent(this, AfficherMesProduitsEmprunte.class);
             startActivity(myIntent);
 
         } else if (id == R.id.nav__emprunt_deconnexion) {
