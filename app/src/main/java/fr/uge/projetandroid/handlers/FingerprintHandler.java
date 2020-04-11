@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import fr.uge.projetandroid.MainActivity;
 import fr.uge.projetandroid.R;
+import fr.uge.projetandroid.borrow.AcceuilEmprunt;
 
 
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
@@ -52,7 +53,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         imageView.setImageResource(R.drawable.ic_action_fingerprint_vert);
         ((Activity) context).finish();
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, AcceuilEmprunt.class);
         context.startActivity(intent);
     }
 

@@ -54,6 +54,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import fr.uge.projetandroid.borrow.AcceuilEmprunt;
 import fr.uge.projetandroid.handlers.FingerprintHandler;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -424,7 +425,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mPasswordView.requestFocus();
             }
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, AcceuilEmprunt.class);
             LoginActivity.this.startActivity(intent);
         }
 
