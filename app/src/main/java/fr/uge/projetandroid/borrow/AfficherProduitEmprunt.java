@@ -630,7 +630,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
                                     @Override
                                     public void run() {
                                         Toast.makeText(getApplicationContext(),
-                                                "mohsine" + e.getMessage(),
+                                                "Erreur" + e.getMessage(),
                                                 Toast.LENGTH_LONG)
                                                 .show();
                                     }
@@ -660,7 +660,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),
-                                    "mamadou" + e.getMessage(),
+                                    "Erreur" + e.getMessage(),
                                     Toast.LENGTH_LONG)
                                     .show();
                         }

@@ -127,20 +127,16 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
 
     private void initUi(){
         RecyclerView_CatalogueProduit_Bibliotheque_Emprunt = (RecyclerView)findViewById(R.id.RecyclerView_CatalogueProduit_Bibliotheque_Emprunt);
-        //RecyclerView_CatalogueProduit_Electronique_Emprunt = (RecyclerView)findViewById(R.id.RecyclerView_CatalogueProduit_Electronique_Emprunt);
-        //RecyclerView_CatalogueProduit_ModeVetement_Emprunt = (RecyclerView)findViewById(R.id.RecyclerView_CatalogueProduit_ModeVetement_Emprunt);
     }
 
     private class ShowProductsTask extends AsyncTask<Void, Void, Void> {
 
         List<Product> produitsBibliotheque;
-        List<Product> produitsElectronique;
-        List<Product> produitsModeVetements;
+
 
         public ShowProductsTask() {
             produitsBibliotheque = new ArrayList<>();
-            produitsElectronique = new ArrayList<>();
-            produitsModeVetements = new ArrayList<>();
+
         }
 
         @Override
@@ -156,15 +152,11 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
         @Override
         protected Void doInBackground(Void... arg0) {
             produitsBibliotheque = getProductsBycategory("Electronique");
-           // produitsElectronique = getProductsBycategory("Electronique");
-           // produitsModeVetements = getProductsBycategory("eau");
             return null;
         }
 
         protected List<Product> getProductsBycategory(String category){
             List<Product> resultats= new ArrayList<>();
-            //String url = "http://uge-webservice.herokuapp.com/api/product/category/"+category+"/";
-            //String url = "http://uge-webservice.herokuapp.com/api/product/category/Electronique/";
             String url = "http://uge-webservice.herokuapp.com/api/product/";
             HttpHandler sh = new HttpHandler();
             String jsonStr = sh.makeServiceCall(url);
@@ -227,21 +219,18 @@ public class AfficherCatalogueProduitsEmprunt extends AppCompatActivity implemen
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            // Dismiss the progress dialog
+
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
             AdapterCatalogueProduitsEmprunt adapterBibliotheque = new AdapterCatalogueProduitsEmprunt(produitsBibliotheque);
-           // AdapterCatalogueProduitsEmprunt adapterElectronique = new AdapterCatalogueProduitsEmprunt(produitsElectronique);
-            //AdapterCatalogueProduitsEmprunt adapterModeVetement = new AdapterCatalogueProduitsEmprunt(produitsModeVetements);
+
 
             RecyclerView_CatalogueProduit_Bibliotheque_Emprunt.setLayoutManager(new LinearLayoutManager(AfficherCatalogueProduitsEmprunt.this));
-            //RecyclerView_CatalogueProduit_Electronique_Emprunt.setLayoutManager(new LinearLayoutManager(AfficherCatalogueProduitsEmprunt.this));
-            //RecyclerView_CatalogueProduit_ModeVetement_Emprunt.setLayoutManager(new LinearLayoutManager(AfficherCatalogueProduitsEmprunt.this));
+
 
             RecyclerView_CatalogueProduit_Bibliotheque_Emprunt.setAdapter(adapterBibliotheque);
-            //RecyclerView_CatalogueProduit_Electronique_Emprunt.setAdapter(adapterElectronique);
-            //RecyclerView_CatalogueProduit_ModeVetement_Emprunt.setAdapter(adapterModeVetement);
+
         }
 
     }
