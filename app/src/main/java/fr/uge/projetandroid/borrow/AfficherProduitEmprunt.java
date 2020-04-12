@@ -62,6 +62,8 @@ import fr.uge.projetandroid.entities.Borrow;
 import fr.uge.projetandroid.entities.Comment;
 import fr.uge.projetandroid.entities.Product;
 import fr.uge.projetandroid.entities.RequestBorrow;
+import fr.uge.projetandroid.messages.ProduitAjoute;
+import fr.uge.projetandroid.messages.ProduitEmprunte;
 
 public class AfficherProduitEmprunt extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,NavigationView.OnNavigationItemSelectedListener  {
 
@@ -152,6 +154,8 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
 
     private TextView textView_nombre_notifications_emprunt;
     private TextView textView_nombre_panier_emprunt;
+    private TextView Textview_nom_prenom_utilisateur_emprunt;
+    private TextView Textview_email_utilisateur_emprunt;
     private User user;
 
     @Override
@@ -484,7 +488,10 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        Textview_nom_prenom_utilisateur_emprunt = (TextView)findViewById(R.id.Textview_nom_prenom_utilisateur_emprunt);
+        Textview_email_utilisateur_emprunt = (TextView)findViewById(R.id.Textview_email_utilisateur_emprunt);
+        Textview_nom_prenom_utilisateur_emprunt.setText(user.getFirstName()+" "+user.getLastName());
+        Textview_email_utilisateur_emprunt.setText(user.getEmail());
         getMenuInflater().inflate(R.menu.main_emprunt, menu);
 
 
@@ -911,6 +918,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
 
 
     private class AddBorrowTask extends AsyncTask<Void, Void, Void> {
+        private Borrow borrow;
 
         @Override
         protected void onPreExecute() {
@@ -927,7 +935,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
 
             HttpURLConnection urlConnection;
             String url2 = "http://uge-webservice.herokuapp.com/api/borrow/";
-            Borrow borrow = new Borrow();
+            borrow = new Borrow();
             String startAt = button_dateDebut_emprunt.getText() + " " +button_heureDebut_emprunt.getText();
             String endAt = button_dateFin_emprunt.getText() + " " +button_heureFin_emprunt.getText();
             borrow.setStartAt(startAt);
@@ -987,7 +995,16 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
-                Toast.makeText(AfficherProduitEmprunt.this, "Produit bien emprunté", Toast.LENGTH_SHORT).show();
+            Intent myIntent = new Intent(AfficherProduitEmprunt.this, ProduitEmprunte.class);
+            myIntent.putExtra("idProduct",product.getId());
+            myIntent.putExtra("nomProduit",product.getName());
+            myIntent.putExtra("dateDebut",borrow.getStartAt());
+            myIntent.putExtra("dateFin",borrow.getEndAt());
+            myIntent.putExtra("user",user);
+            startActivity(myIntent);
+
+
+            //Toast.makeText(AfficherProduitEmprunt.this, "Produit bien emprunté", Toast.LENGTH_SHORT).show();
 
         }
 

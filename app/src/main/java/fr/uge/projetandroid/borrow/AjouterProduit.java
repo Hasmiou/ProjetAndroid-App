@@ -55,6 +55,7 @@ import fr.uge.projetandroid.MainActivity;
 import fr.uge.projetandroid.R;
 import fr.uge.projetandroid.entities.Product;
 import fr.uge.projetandroid.entities.User;
+import fr.uge.projetandroid.messages.ProduitAjoute;
 
 public class AjouterProduit extends AppCompatActivity implements AdapterView.OnItemSelectedListener ,NavigationView.OnNavigationItemSelectedListener {
 
@@ -80,6 +81,8 @@ public class AjouterProduit extends AppCompatActivity implements AdapterView.OnI
 
     private TextView textView_nombre_notifications_emprunt;
     private TextView textView_nombre_panier_emprunt;
+    private TextView Textview_nom_prenom_utilisateur_emprunt;
+    private TextView Textview_email_utilisateur_emprunt;
     private User user;
 
 
@@ -374,7 +377,10 @@ public class AjouterProduit extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        Textview_nom_prenom_utilisateur_emprunt = (TextView)findViewById(R.id.Textview_nom_prenom_utilisateur_emprunt);
+        Textview_email_utilisateur_emprunt = (TextView)findViewById(R.id.Textview_email_utilisateur_emprunt);
+        Textview_nom_prenom_utilisateur_emprunt.setText(user.getFirstName()+" "+user.getLastName());
+        Textview_email_utilisateur_emprunt.setText(user.getEmail());
         getMenuInflater().inflate(R.menu.main_emprunt, menu);
 
 
@@ -670,7 +676,10 @@ public class AjouterProduit extends AppCompatActivity implements AdapterView.OnI
                 pDialog.dismiss();
 
             if(ResponseCodePhpServer==200){
-                Toast.makeText(AjouterProduit.this, "Produit ajouté avec succes", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(AjouterProduit.this, ProduitAjoute.class);
+                myIntent.putExtra("idProduct",product.getId());
+                myIntent.putExtra("user",user);
+                startActivity(myIntent);
             }
             else {
                 Toast.makeText(AjouterProduit.this, "Erreur de connexion veuillez reessayer", Toast.LENGTH_SHORT).show();

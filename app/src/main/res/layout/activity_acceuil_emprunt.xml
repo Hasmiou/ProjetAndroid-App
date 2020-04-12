@@ -9,6 +9,7 @@
         tools:openDrawer="start"
         tools:context=".borrow.AcceuilEmprunt">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -70,6 +71,8 @@
 
         </LinearLayout>
     </LinearLayout>
+
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
