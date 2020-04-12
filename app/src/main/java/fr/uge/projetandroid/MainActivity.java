@@ -15,6 +15,7 @@ import android.view.View;
 import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 
+import fr.uge.projetandroid.borrow.AcceuilEmprunt;
 import fr.uge.projetandroid.borrow.AfficherNotificationsEmprunt;
 import fr.uge.projetandroid.borrow.AfficherProduitAjoute;
 import fr.uge.projetandroid.borrow.AfficherMesProduitsEmprunte;
@@ -22,15 +23,16 @@ import fr.uge.projetandroid.borrow.AfficherProduitEmprunt;
 import fr.uge.projetandroid.borrow.AfficherProduitsRechercheEmprunt;
 import fr.uge.projetandroid.borrow.AjouterProduit;
 import fr.uge.projetandroid.borrow.Emprunter;
+import fr.uge.projetandroid.entities.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private int nombreNotifications=2;
-    private int nombreProduitsPanier=0;
+
 
     private TextView textView_nombre_notifications_emprunt;
     private TextView textView_nombre_panier_emprunt;
+    private User user;
 
 
 
@@ -38,6 +40,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        user = (User)getIntent().getSerializableExtra("user");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,19 +56,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
     }
 
 
     private void setupBadge() {
 
         if (textView_nombre_notifications_emprunt != null) {
-            if (nombreNotifications == 0) {
+            if (user.getTotalNotification() == 0) {
                 if (textView_nombre_notifications_emprunt.getVisibility() != View.GONE) {
                     textView_nombre_notifications_emprunt.setVisibility(View.GONE);
                 }
             } else {
-                textView_nombre_notifications_emprunt.setText(String.valueOf(Math.min(nombreNotifications, 99)));
+                textView_nombre_notifications_emprunt.setText(String.valueOf(Math.min(user.getTotalNotification() , 99)));
                 if (textView_nombre_notifications_emprunt.getVisibility() != View.VISIBLE) {
                     textView_nombre_notifications_emprunt.setVisibility(View.VISIBLE);
                 }
@@ -71,12 +75,12 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (textView_nombre_panier_emprunt != null) {
-            if (nombreProduitsPanier == 0) {
+            if (user.getTotalProduitEmprunte() == 0) {
                 if (textView_nombre_panier_emprunt.getVisibility() != View.GONE) {
                     textView_nombre_panier_emprunt.setVisibility(View.GONE);
                 }
             } else {
-                textView_nombre_panier_emprunt.setText(String.valueOf(Math.min(nombreProduitsPanier, 99)));
+                textView_nombre_panier_emprunt.setText(String.valueOf(Math.min(user.getTotalProduitEmprunte() , 99)));
                 if (textView_nombre_panier_emprunt.getVisibility() != View.VISIBLE) {
                     textView_nombre_panier_emprunt.setVisibility(View.VISIBLE);
                 }
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity
             public boolean onQueryTextSubmit(String query) {
                 if(query!=null){
                     Intent myIntent = new Intent(MainActivity.this, AfficherProduitsRechercheEmprunt.class);
+                    myIntent.putExtra("user",user);
                     myIntent.putExtra("Keyword",query);
                     startActivity(myIntent);
                 }
@@ -154,11 +159,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.item_notifiction_emprunt) {
             Intent myIntent = new Intent(this, AfficherNotificationsEmprunt.class);
+            myIntent.putExtra("user",user);
             startActivity(myIntent);
             return true;
         }
         else if (id == R.id.item_nombre_panier_emprunt) {
             Intent myIntent = new Intent(this, AfficherMesProduitsEmprunte.class);
+            myIntent.putExtra("user",user);
             startActivity(myIntent);
             return true;
         }
@@ -178,27 +185,37 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_emprunt_accueil) {
 
-
-            Intent myIntent = new Intent(this, MainActivity.class);
+            Intent myIntent = new Intent(this, AcceuilEmprunt.class);
+            myIntent.putExtra("user",user);
             startActivity(myIntent);
 
         } else if (id == R.id.nav__emprunt_retourner) {
-            Intent myIntent = new Intent(this, AfficherNotificationsEmprunt.class);
+            Intent myIntent = new Intent(this, AfficherMesProduitsEmprunte.class);
+            myIntent.putExtra("user",user);
             startActivity(myIntent);
 
         } else if (id == R.id.nav__emprunt_emprunter) {
             Intent myIntent = new Intent(this, Emprunter.class);
+            myIntent.putExtra("user",user);
             startActivity(myIntent);
 
         } else if (id == R.id.nav__emprunt_mesproduits) {
 
-
-            Intent myIntent = new Intent(this, AfficherMesProduitsEmprunte.class);
+            Intent myIntent = new Intent(this, AfficherProduitAjoute.class);
+            myIntent.putExtra("user", user);
             startActivity(myIntent);
+        }
 
-        } else if (id == R.id.nav__emprunt_deconnexion) {
+         else if (id == R.id.nav__emprunt_ajouterproduit) {
             Intent myIntent = new Intent(this, AjouterProduit.class);
+            myIntent.putExtra("user",user);
             startActivity(myIntent);
+        }
+
+        else if (id == R.id.nav__emprunt_deconnexion) {
+            Intent myIntent = new Intent(this, LoginActivity.class);
+            startActivity(myIntent);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

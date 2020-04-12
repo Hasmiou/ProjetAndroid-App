@@ -1,7 +1,8 @@
 package fr.uge.projetandroid.entities;
+import java.io.Serializable;
 import java.util.Collection;
 
-public class User {
+public class User implements Serializable{
 
     private long id;
 
@@ -21,18 +22,13 @@ public class User {
 
     private String role;
 
-
     private String updatedAt;
-
 
     private String updatedBy;
 
-
     private Collection<Product> products;
 
-
     private Collection<Comment> comments;
-
 
     private Account account;
 
@@ -41,6 +37,14 @@ public class User {
     private Collection<Borrow> borrows;
 
     private  Collection<RequestBorrow> requestBorrows;
+
+    private int totalNotification;
+
+    private int totalProduitEmprunte;
+
+    private int totalPanier;
+
+    private int totalWishlist ;
 
 
     public User() {
@@ -69,6 +73,30 @@ public class User {
         this.notifications = notifications;
         this.borrows = borrows;
         this.requestBorrows = requestBorrows;
+    }
+
+    public User(long id, String login, String lastName, String firstName, String email, String password, String phone, String address, String role, String updatedAt, String updatedBy, Collection<Product> products, Collection<Comment> comments, Account account, Collection<Notification> notifications, Collection<Borrow> borrows, Collection<RequestBorrow> requestBorrows, int totalNotification, int totalProduitEmprunte, int totalPanier, int totalWishlist) {
+        this.id = id;
+        this.login = login;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
+        this.updatedAt = updatedAt;
+        this.updatedBy = updatedBy;
+        this.products = products;
+        this.comments = comments;
+        this.account = account;
+        this.notifications = notifications;
+        this.borrows = borrows;
+        this.requestBorrows = requestBorrows;
+        this.totalNotification = totalNotification;
+        this.totalProduitEmprunte = totalProduitEmprunte;
+        this.totalPanier = totalPanier;
+        this.totalWishlist = totalWishlist;
     }
 
     public long getId() {
@@ -207,6 +235,38 @@ public class User {
         this.requestBorrows = requestBorrows;
     }
 
+    public int getTotalNotification() {
+        return totalNotification;
+    }
+
+    public void setTotalNotification(int totalNotification) {
+        this.totalNotification = totalNotification;
+    }
+
+    public int getTotalProduitEmprunte() {
+        return totalProduitEmprunte;
+    }
+
+    public void setTotalProduitEmprunte(int totalProduitEmprunte) {
+        this.totalProduitEmprunte = totalProduitEmprunte;
+    }
+
+    public int getTotalPanier() {
+        return totalPanier;
+    }
+
+    public void setTotalPanier(int totalPanier) {
+        this.totalPanier = totalPanier;
+    }
+
+    public int getTotalWishlist() {
+        return totalWishlist;
+    }
+
+    public void setTotalWishlist(int totalWishlist) {
+        this.totalWishlist = totalWishlist;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -227,6 +287,10 @@ public class User {
                 ", notifications=" + notifications +
                 ", borrows=" + borrows +
                 ", requestBorrows=" + requestBorrows +
+                ", totalNotification=" + totalNotification +
+                ", totalProduitEmprunte=" + totalProduitEmprunte +
+                ", totalPanier=" + totalPanier +
+                ", totalWishlist=" + totalWishlist +
                 '}';
     }
 

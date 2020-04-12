@@ -15,16 +15,22 @@ import android.widget.TextView;
 import fr.uge.projetandroid.R;
 import fr.uge.projetandroid.borrow.AfficherProduitEmprunt;
 import fr.uge.projetandroid.borrow.AfficherProduitsRechercheEmprunt;
+import fr.uge.projetandroid.entities.User;
 
 public class AdapterSlideAcceuilEmprunt extends PagerAdapter {
 
     private Context context;
     private LayoutInflater inflater;
     private int current;
+    private User user;
 
-    public AdapterSlideAcceuilEmprunt(Context context) {
+    public AdapterSlideAcceuilEmprunt(Context context, User user) {
         this.context = context;
+        this.user = user;
     }
+
+
+
 
     //Array
     public int[] list_images = {
@@ -97,6 +103,7 @@ public class AdapterSlideAcceuilEmprunt extends PagerAdapter {
             public void onClick(View v){
                 Intent myIntent = new Intent(v.getContext(), AfficherProduitsRechercheEmprunt.class);
                 myIntent.putExtra("Keyword",list_title[getCurrent()]);
+                myIntent.putExtra("user",user);
                 v.getContext().startActivity(myIntent);
             }
         });

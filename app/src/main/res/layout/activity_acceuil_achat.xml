@@ -7,7 +7,7 @@
     tools:context=".shopping.AcceuilAchat">
 
     <TextView
-        android:id="@+id/dfdfdsfsd"
+        android:id="@+id/fatitest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

@@ -102,6 +102,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private TextView textView_erreur_fingerprint;
     private boolean authentifiedFingerPrint=false;
     private int idUser =-1;
+    private User user;
 
     private FingerprintHandler helper;
 
@@ -424,18 +425,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, User> {
 
         private final String mEmail;
         private final String mPassword;
-        private String firstName;
-        private String lastname;
-        private int totalNotification;
-        private int totalProduitEmprunte;
-        private int totalPanier;
-        private int totalWishlist;
         private String devise;
         private String role;
+
+
+
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -443,19 +441,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected User doInBackground(Void... params) {
 
             try {
 
-                Thread.sleep(2000);
+                Thread.sleep(4000);
             } catch (InterruptedException e) {
-                return false;
+                return null;
             }
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
-                    if(!pieces[1].equals(mPassword)) return false;
+                    if(!pieces[1].equals(mPassword)) return null;
                 }
             }
 
@@ -464,7 +462,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             String url2 = "http://uge-webservice.herokuapp.com/api/login";
             String data = user.EmailPasswordToJson();
             String result = null;
-            Log.e("fati",data);
             try {
                 if(!authentifiedFingerPrint){
                     urlConnection = (HttpURLConnection) ((new URL(url2).openConnection()));
@@ -474,7 +471,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     urlConnection.setRequestMethod("POST");
                     urlConnection.connect();
 
-                        Log.e("mohsine",data);
                     OutputStream outputStream = urlConnection.getOutputStream();
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                     writer.write(data);
@@ -501,10 +497,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     long id = db.insertUser(idUser);
                     if(id==-1){
-                        Log.e("FingerPrint", "Response from url: " + "erreur");
+                        Log.e("FingerPrint",  "erreur");
                     }
                     else {
-                        Log.e("FingerPrint", "Response from url: " + "Bien ajouté");
+                        Log.e("FingerPrint", "Bien ajouté");
                     }
 
                     String url = "http://uge-webservice.herokuapp.com/api/user/"+idUser;
@@ -517,16 +513,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     if (jsonStr != null) {
                         try {
+
+                            user = new User();
                             JSONObject jsonObj = new JSONObject(jsonStr);
-                            firstName=jsonObj.getString("firstName");
-                            lastname =jsonObj.getString("lastName");
-                            totalNotification =jsonObj.getInt("totalNotification");
-                            totalProduitEmprunte =jsonObj.getInt("totalBorrow");
-                            totalPanier =jsonObj.getInt("totalCart");
-                            //totalWishlist =jsonObj.getInt("totalWishlist");
-                            totalWishlist =0;
+                            user.setId(jsonObj.getLong("id"));
+                            user.setEmail(jsonObj.getString("email"));
+                            user.setFirstName(jsonObj.getString("firstName"));
+                            user.setLastName(jsonObj.getString("lastName"));
+                            user.setTotalNotification(jsonObj.getInt("totalNotification"));
+                            user.setTotalPanier(jsonObj.getInt("totalCart"));
+                            user.setTotalProduitEmprunte(jsonObj.getInt("totalBorrow"));
+                            //user.setTotalWishlist(jsonObj.getInt("totalWishlist"));
+                            user.setTotalWishlist(7);
                             role=jsonObj.getString("role");
+                            user.setRole(role);
                             devise="EUR";
+
+                            Log.e("User",user.toString());
 
                         } catch (final JSONException e) {
                             Log.e("Login", "Json parsing error: " + e.getMessage());
@@ -543,36 +546,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.e("Login Erreur", e.getMessage());
             }
 
-            if(idUser >=0) return true;
-            return false;
+            if(idUser >=0) return user;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(User user) {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
+            if (user!=null) {
                 if(role.equals("Customer")){
                     Intent intent = new Intent(LoginActivity.this, AcceuilAchat.class);
-                    intent.putExtra("idUser",idUser);
-                    intent.putExtra("email",mEmail);
-                    intent.putExtra("firstname",firstName);
-                    intent.putExtra("lastname",lastname);
-                    intent.putExtra("totalNotification",totalNotification);
-                    intent.putExtra("totalPanier",totalPanier);
-                    intent.putExtra("totalWishlist",totalWishlist);
+                    intent.putExtra("devise",devise);
+                    intent.putExtra("user",user);
                     LoginActivity.this.startActivity(intent);
+                    Log.e("UserEmprunt",user.toString());
                 }
                 else {
                     Intent intent = new Intent(LoginActivity.this, AcceuilEmprunt.class);
-                    intent.putExtra("idUser",idUser);
-                    intent.putExtra("email",mEmail);
-                    intent.putExtra("firstname",firstName);
-                    intent.putExtra("lastname",lastname);
-                    intent.putExtra("totalNotification",totalNotification);
-                    intent.putExtra("totalProduitEmprunte",totalProduitEmprunte);
+                    intent.putExtra("user",user);
                     LoginActivity.this.startActivity(intent);
+                    Log.e("UserEmprunt",user.toString());
                 }
                 finish();
             } else {
