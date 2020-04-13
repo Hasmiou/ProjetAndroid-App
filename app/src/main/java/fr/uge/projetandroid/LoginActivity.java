@@ -559,6 +559,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(role.equals("Customer")){
                     Intent intent = new Intent(LoginActivity.this, AcceuilAchat.class);
                     intent.putExtra("devise",devise);
+                    intent.putExtra("rate",1);
                     intent.putExtra("user",user);
                     LoginActivity.this.startActivity(intent);
                     Log.e("UserEmprunt",user.toString());
