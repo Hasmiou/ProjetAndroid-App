@@ -59,7 +59,7 @@ public class AfficherProduitsRechercheAchat extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_afficher_produits_recherche_emprunt);
+        setContentView(R.layout.activity_afficher_produit_recherche_achat);
 
         Intent myIntent = getIntent();
         keyword = myIntent.getStringExtra("Keyword");
