@@ -523,8 +523,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             user.setTotalNotification(jsonObj.getInt("totalNotification"));
                             user.setTotalPanier(jsonObj.getInt("totalCart"));
                             user.setTotalProduitEmprunte(jsonObj.getInt("totalBorrow"));
-                            //user.setTotalWishlist(jsonObj.getInt("totalWishlist"));
-                            user.setTotalWishlist(7);
+                            user.setTotalWishlist(jsonObj.getInt("totalWishlist"));
+
                             role=jsonObj.getString("role");
                             user.setRole(role);
                             devise="EUR";
@@ -562,7 +562,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     intent.putExtra("rate",1);
                     intent.putExtra("user",user);
                     LoginActivity.this.startActivity(intent);
-                    Log.e("UserEmprunt",user.toString());
+                    Log.e("UserAchat",user.toString());
                 }
                 else {
                     Intent intent = new Intent(LoginActivity.this, AcceuilEmprunt.class);

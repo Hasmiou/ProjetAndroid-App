@@ -18,15 +18,15 @@
 
     <item
         android:id="@+id/item_wishlist_achat"
-        android:icon="@drawable/ic_favorite_black_24dp"
+        android:icon="@drawable/ic_favorite_white_24dp"
         android:title="Wishlist"
         app:actionLayout="@layout/custom_wishlist_achat_item_layout"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/item_nombre_panier_achat"
-        android:icon="@drawable/ic_shopping_cart_black_24dp"
+        android:icon="@drawable/ic_shopping_cart_white_24dp"
         android:title="Panier"
         app:actionLayout="@layout/custom_panier_achat_item_layout"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

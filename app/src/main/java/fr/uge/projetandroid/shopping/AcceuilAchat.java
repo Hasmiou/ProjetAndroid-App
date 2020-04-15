@@ -73,7 +73,7 @@ public class AcceuilAchat extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        user = (User)getIntent().getSerializableExtra("user");
+
         devise = getIntent().getStringExtra("devise");
         rate = getIntent().getDoubleExtra("rate",1);
         user = (User)getIntent().getSerializableExtra("user");

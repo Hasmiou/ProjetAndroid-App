@@ -352,7 +352,7 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         protected Void doInBackground(Void... arg0) {
 
 
-            String url = "http://uge-webservice.herokuapp.com/api/cart/productInWishlist/";
+            String url = "http://uge-webservice.herokuapp.com/api/wishlist/productInWishlist/";
             HttpHandler sh = new HttpHandler();
             String jsonStr = sh.makeServiceCall(url);
 

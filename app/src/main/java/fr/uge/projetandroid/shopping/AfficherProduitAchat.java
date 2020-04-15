@@ -549,8 +549,8 @@ public class AfficherProduitAchat extends AppCompatActivity implements Navigatio
 
             String url = "http://uge-webservice.herokuapp.com/api/cart/add/"+product.getId();
             HttpHandler sh = new HttpHandler();
-            String total = sh.makeServiceCall(url);
-            user.setTotalPanier(Integer.parseInt(total));
+            sh.makeServiceCall(url);
+            user.setTotalPanier(user.getTotalPanier()+1);
             setupBadge();
             return null;
         }
@@ -580,8 +580,8 @@ public class AfficherProduitAchat extends AppCompatActivity implements Navigatio
 
             String url = "http://uge-webservice.herokuapp.com/api/wishlist/add/"+product.getId();
             HttpHandler sh = new HttpHandler();
-            String total = sh.makeServiceCall(url);
-            user.setTotalWishlist(Integer.parseInt(total));
+            sh.makeServiceCall(url);
+            user.setTotalWishlist(user.getTotalWishlist()+1);
             setupBadge();
             return null;
         }
