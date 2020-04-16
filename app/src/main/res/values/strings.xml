@@ -71,7 +71,6 @@
     </string-array>
 
 
-
     <string-array name="devise">
         <item>EUR</item>
         <item>USD</item>
@@ -82,7 +81,6 @@
         <item>AED</item>
         <item>TND</item>
     </string-array>
-
 
 
     <string name="prompt_email">Email</string>
