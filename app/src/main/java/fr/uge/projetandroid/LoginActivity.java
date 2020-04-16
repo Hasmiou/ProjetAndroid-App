@@ -518,6 +518,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             JSONObject jsonObj = new JSONObject(jsonStr);
                             user.setId(jsonObj.getLong("id"));
                             user.setEmail(jsonObj.getString("email"));
+                            user.setPassword(jsonObj.getString("password"));
                             user.setFirstName(jsonObj.getString("firstName"));
                             user.setLastName(jsonObj.getString("lastName"));
                             user.setTotalNotification(jsonObj.getInt("totalNotification"));
