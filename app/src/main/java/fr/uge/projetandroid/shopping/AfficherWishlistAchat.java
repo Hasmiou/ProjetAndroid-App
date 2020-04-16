@@ -352,7 +352,7 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         protected Void doInBackground(Void... arg0) {
 
 
-            String url = "http://uge-webservice.herokuapp.com/api/wishlist/productInWishlist/";
+            String url = "http://uge-webservice.herokuapp.com/api/wishlist/productInWishlist/"+user.getId();
             HttpHandler sh = new HttpHandler();
             String jsonStr = sh.makeServiceCall(url);
 
@@ -484,7 +484,7 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         protected Void doInBackground(Void... arg0) {
 
 
-            String url = "http://uge-webservice.herokuapp.com/api/wishlist/deleteAll/";
+            String url = "http://uge-webservice.herokuapp.com/api/wishlist/deleteAll/"+user.getId();
             HttpHandler sh = new HttpHandler();
              sh.makeServiceCall(url);
             user.setTotalWishlist(0);
@@ -518,7 +518,7 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         protected Void doInBackground(Void... arg0) {
 
 
-            String url = "http://uge-webservice.herokuapp.com/api/wishlist/addInCart/";
+            String url = "http://uge-webservice.herokuapp.com/api/wishlist/addInCart/"+user.getId();
             HttpHandler sh = new HttpHandler();
             sh.makeServiceCall(url);
             user.setTotalPanier(user.getTotalPanier()+user.getTotalWishlist());

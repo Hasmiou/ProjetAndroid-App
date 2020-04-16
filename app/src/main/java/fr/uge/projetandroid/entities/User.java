@@ -296,7 +296,7 @@ public class User implements Serializable{
 
     public String EmailPasswordToJson() {
         return "    {\n" +
-                "        \"email\": \"" + email + "\",\n" +
+                "        \"login\": \"" + email + "\",\n" +
                 "        \"password\": \"" + password + "\"\n" +
                 "    }";
     }

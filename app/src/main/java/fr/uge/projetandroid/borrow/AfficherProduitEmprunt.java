@@ -941,7 +941,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
             borrow.setStartAt(startAt);
             borrow.setEndAt(endAt);
             borrow.setProduct(product.getId());
-
+            borrow.setUser(user.getId());
             String data = borrow.toJson();
             Log.e("Json", data);
             String result = null;
@@ -1035,7 +1035,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
             requestBorrow.setStartAt(startAt);
             requestBorrow.setEndAt(endAt);
             requestBorrow.setProduct(product.getId());
-
+            requestBorrow.setUser(user.getId());
             String data = requestBorrow.toJson();
             String result = null;
             try {
@@ -1117,6 +1117,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
             comment.setContent(editText_commentaire.getText().toString());
             comment.setProduct(product.getId());
             product.addComment(comment);
+            comment.setUser(user.getId());
             String data = comment.toJson();
             String result = null;
             try {
@@ -1195,7 +1196,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
         protected Void doInBackground(Void... arg0) {
 
 
-            String url = "http://uge-webservice.herokuapp.com/api/notification/updateNotification/"+idNotification;
+            String url = "http://uge-webservice.herokuapp.com/api/notification/updateNotification/"+idNotification+"/"+user.getId();
             HttpHandler sh = new HttpHandler();
             String total = sh.makeServiceCall(url);
             user.setTotalNotification(Integer.parseInt(total));

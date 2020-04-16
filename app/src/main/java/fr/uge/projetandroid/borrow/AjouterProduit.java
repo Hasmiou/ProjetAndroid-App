@@ -550,7 +550,7 @@ public class AjouterProduit extends AppCompatActivity implements AdapterView.OnI
                     String userCredentials = user.getEmail()+":"+user.getPassword();
                     //String userCredentials = "username:password";
                    // String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userCredentials.getBytes()));
-                    String basicAuth = "Basic " + new String(Base64.encode(userCredentials.getBytes(),Base64.DEFAULT));
+                   // String basicAuth = "Basic " + new String(Base64.encode(userCredentials.getBytes(),Base64.DEFAULT));
 
 
                     // Open a HTTP  connection to  the URL
@@ -560,7 +560,7 @@ public class AjouterProduit extends AppCompatActivity implements AdapterView.OnI
                     conn.setUseCaches(false); // Don't use a Cached Copy
                     conn.setRequestMethod("POST");
 
-                    conn.setRequestProperty ("Authorization", basicAuth);
+                   // conn.setRequestProperty ("Authorization", basicAuth);
 
 
                     conn.setRequestProperty("Connection", "Keep-Alive");
@@ -616,6 +616,7 @@ public class AjouterProduit extends AppCompatActivity implements AdapterView.OnI
 
                         HttpURLConnection urlConnection;
                         String url2 = "http://uge-webservice.herokuapp.com/api/product/";
+                        product.setUser(user.getId());
                         String data = product.toJson();
                         String result = null;
                         try {
