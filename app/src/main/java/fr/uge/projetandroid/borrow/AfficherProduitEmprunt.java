@@ -62,6 +62,7 @@ import fr.uge.projetandroid.entities.Borrow;
 import fr.uge.projetandroid.entities.Comment;
 import fr.uge.projetandroid.entities.Product;
 import fr.uge.projetandroid.entities.RequestBorrow;
+import fr.uge.projetandroid.messages.DemandeEmprunt;
 import fr.uge.projetandroid.messages.ProduitAjoute;
 import fr.uge.projetandroid.messages.ProduitEmprunte;
 
@@ -1088,7 +1089,10 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
-            Toast.makeText(AfficherProduitEmprunt.this, "Demande bien enregistré", Toast.LENGTH_SHORT).show();
+            Intent myIntent = new Intent(AfficherProduitEmprunt.this, DemandeEmprunt.class);
+            myIntent.putExtra("user",user);
+            startActivity(myIntent);
+
 
         }
 

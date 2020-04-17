@@ -173,10 +173,10 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         final MenuItem menuItemDevise = menu.findItem(R.id.item_devise_achat);
         Spinner spinner = (Spinner) menuItemDevise.getActionView();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.devise, android.R.layout.simple_spinner_item);
+                R.array.devise, R.layout.spinner_item_menu);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
+        spinner.setBackgroundResource(R.drawable.bg_spinner_menu);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -487,9 +487,7 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
             String url = "http://uge-webservice.herokuapp.com/api/wishlist/deleteAll/"+user.getId();
             HttpHandler sh = new HttpHandler();
              sh.makeServiceCall(url);
-            user.setTotalWishlist(0);
-            total =0;
-            setupBadge();
+
             return null;
         }
 
@@ -497,6 +495,10 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            user.setTotalWishlist(0);
+            total =0;
+            setupBadge();
+
             AdapterPanierAchat adapterPanierAchat = new AdapterPanierAchat(products,user,devise,rate);
 
             RecyclerView_wishlist_achat.setLayoutManager(new LinearLayoutManager(AfficherWishlistAchat.this));
@@ -521,10 +523,7 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
             String url = "http://uge-webservice.herokuapp.com/api/wishlist/addInCart/"+user.getId();
             HttpHandler sh = new HttpHandler();
             sh.makeServiceCall(url);
-            user.setTotalPanier(user.getTotalPanier()+user.getTotalWishlist());
-            user.setTotalWishlist(0);
-            total =0;
-            setupBadge();
+
             return null;
         }
 
@@ -532,6 +531,12 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+
+            user.setTotalPanier(user.getTotalPanier()+user.getTotalWishlist());
+            user.setTotalWishlist(0);
+            total =0;
+            setupBadge();
+
             AdapterPanierAchat adapterPanierAchat = new AdapterPanierAchat(products,user,devise,rate);
 
             RecyclerView_wishlist_achat.setLayoutManager(new LinearLayoutManager(AfficherWishlistAchat.this));

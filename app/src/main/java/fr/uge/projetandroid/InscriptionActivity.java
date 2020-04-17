@@ -29,6 +29,7 @@ import fr.uge.projetandroid.borrow.AjouterProduit;
 import fr.uge.projetandroid.entities.User;
 import fr.uge.projetandroid.messages.InscriptionSucces;
 import fr.uge.projetandroid.messages.ProduitAjoute;
+import fr.uge.projetandroid.shopping.AfficherSoldeAchat;
 
 public class InscriptionActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
@@ -67,6 +68,7 @@ public class InscriptionActivity extends AppCompatActivity {
                 user.setPhone(editText_telephone_inscription.getText().toString());
                 user.setAddress(editText_adresse_inscription.getText().toString());
                 user.setRole("Customer");
+                Log.e("user",user.userRegisterToJson());
                 new InscriptionActivity.InscriptionTask().execute();
             }
         });
@@ -89,8 +91,9 @@ public class InscriptionActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
 
             HttpURLConnection urlConnection;
-            String url2 = "http://uge-webservice.herokuapp.com/register/";
+            String url2 = "http://uge-webservice.herokuapp.com/register";
             String data = user.userRegisterToJson();
+            Log.e("user",user.userRegisterToJson());
             String result = null;
             try {
                 //Connect
@@ -145,11 +148,20 @@ public class InscriptionActivity extends AppCompatActivity {
 
             Log.e("inscription","votre compte a bien été créé");
 
-            Intent intent = new Intent(InscriptionActivity.this, InscriptionSucces.class);
-            intent.putExtra("email",user.getEmail());
-            startActivity(intent);
+
+
+test();
+
+
 
         }
+
+    }
+
+    void test(){
+        Intent intent = new Intent(this, InscriptionSucces.class);
+        intent.putExtra("email",user.getEmail());
+        startActivity(intent);
 
     }
 }
