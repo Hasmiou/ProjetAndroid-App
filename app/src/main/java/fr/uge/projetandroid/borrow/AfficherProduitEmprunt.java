@@ -168,7 +168,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
         long idProduct = myIntent.getLongExtra("idProduct",0);
         idNotification = myIntent.getLongExtra("idNotification",0);
         Boolean read  = myIntent.getBooleanExtra("readNotification",true);
-
+        user = (User)getIntent().getSerializableExtra("user");
         if(read==false) new AfficherProduitEmprunt.updateNotification().execute();
         Log.e("idProductAfficher","->>"+idProduct+"");
 
@@ -368,7 +368,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
         });
 
 
-        user = (User)getIntent().getSerializableExtra("user");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -1202,8 +1202,10 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
 
             String url = "http://uge-webservice.herokuapp.com/api/notification/updateNotification/"+idNotification+"/"+user.getId();
             HttpHandler sh = new HttpHandler();
-            String total = sh.makeServiceCall(url);
-            user.setTotalNotification(Integer.parseInt(total));
+            sh.makeServiceCall(url);
+            int total = user.getTotalNotification()-1;
+            if(total<=0) total =0;
+            user.setTotalNotification(total);
             return null;
         }
 
