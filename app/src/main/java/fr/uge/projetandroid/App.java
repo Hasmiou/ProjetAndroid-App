@@ -33,7 +33,7 @@ import static android.content.ContentValues.TAG;
 public class App extends Application {
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
-    private final static int INTERVAL = 1000 * 10; //2 minutes
+    private final static int INTERVAL = 1000 * 60 * 5; //5 minutes
     private NotificationManagerCompat notificationManager;
     private Context context = this;
     Handler handler = new Handler();
@@ -55,7 +55,7 @@ public class App extends Application {
         PendingIntent actionIntent = PendingIntent.getBroadcast(this,
                 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background);
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.warning);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -66,7 +66,6 @@ public class App extends Application {
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setColor(Color.BLUE)
                 .setContentIntent(contentIntent)
-                .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
                 .addAction(R.mipmap.ic_launcher, "Toast", actionIntent)
                 .build();
@@ -137,10 +136,12 @@ public class App extends Application {
         @Override
         protected Void doInBackground(Void... arg0) {
             int count = dbfp.getUserFingerPrintCount();
+            Log.e(TAG, "Response from url: " + count);
             if (count > 0) {
-                String url = "http://uge-webservice.herokuapp.com/api/user/"+dbfp.getAllUsersFingerPrint().get(count - 1);
+                String url = "http://uge-webservice.herokuapp.com/api/user/"+dbfp.getAllUsersFingerPrint().get(count - 1).getUser();
                 HttpHandler sh = new HttpHandler();
                 String jsonStr = sh.makeServiceCall(url);
+                Log.e(TAG, "URL: " + url);
                 Log.e(TAG, "Response from url: " + jsonStr);
 
                 if (jsonStr != null) {
