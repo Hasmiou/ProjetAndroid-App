@@ -24,12 +24,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".messages.InscriptionSucces"></activity>
+        <activity android:name=".MotDePasseOublie"></activity>
+        <activity android:name=".messages.InscriptionSucces" />
         <activity android:name=".InscriptionActivity" />
-        <activity android:name=".messages.DemandeEmprunt"
+        <activity
+            android:name=".messages.DemandeEmprunt"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".shopping.AfficherProduitAchat"
             android:label="@string/app_name"
@@ -58,15 +59,14 @@
             android:name=".shopping.Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".shopping.AcceuilAchat"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".messages.ErreurProduitAchete"
+        <activity
+            android:name=".messages.ErreurProduitAchete"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".messages.ProduitAchete"
             android:label="@string/app_name"
