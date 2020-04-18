@@ -54,8 +54,8 @@ public class AdapterSlideAcceuilAchat extends PagerAdapter {
             "Electronique",
             "Mode et vetements",
             "Musique",
-            "Accesoires",
-            "Autres"
+            "Accessoires",
+            "Autre"
     };
 
     public String[] list_description = {

@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,13 +35,20 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import fr.uge.projetandroid.LoginActivity;
-import fr.uge.projetandroid.adapters.AdapterPanierAchat;
 import fr.uge.projetandroid.entities.User;
 import fr.uge.projetandroid.handlers.HttpHandler;
 import fr.uge.projetandroid.R;
 import fr.uge.projetandroid.entities.Product;
 import fr.uge.projetandroid.messages.ErreurProduitAchete;
 import fr.uge.projetandroid.messages.ProduitAchete;
+
+
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 public class AfficherPanierAchat extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -352,6 +361,7 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
         protected Void doInBackground(Void... arg0) {
 
 
+            total=0;
             String url = "http://uge-webservice.herokuapp.com/api/cart/productInCart/"+user.getId();
             HttpHandler sh = new HttpHandler();
             String jsonStr = sh.makeServiceCall(url);
@@ -511,6 +521,53 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
         }
     }
 
+
+
+    private class SupprimerProduitTask extends AsyncTask<Void, Void, Void> {
+
+        private long idProduct;
+
+        public SupprimerProduitTask(long idProduct) {
+            this.idProduct = idProduct;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(AfficherPanierAchat.this);
+            pDialog.setMessage("Traitement en cours...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+
+            String url = "http://uge-webservice.herokuapp.com/api/cart/product/"+idProduct+"/"+user.getId();
+            HttpHandler sh = new HttpHandler();
+            sh.makeServiceCall(url);
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+            int total =user.getTotalPanier()-1;
+            if(total<=0) total=0;
+            user.setTotalPanier(total);
+            setupBadge();
+            new AfficherPanierAchat.ShowProductsTask().execute();
+        }
+    }
+
+
+
     private class ValiderPanierTask extends AsyncTask<Void, Void, Boolean> {
 
 
@@ -564,4 +621,154 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
 
         }
     }
+
+
+
+
+    public class AdapterPanierAchat extends RecyclerView.Adapter<AdapterPanierAchat.ViewHolder> {
+
+    private List<Product> results;
+    private User user;
+    private String devise;
+    private Double rate;
+
+
+    public AdapterPanierAchat(List<Product> results, User user, String devise, Double rate) {
+        this.results = results;
+        this.user = user;
+        this.devise = devise;
+        this.rate = rate;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_produit_panier_achat, viewGroup, false));
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        viewHolder.update(results.get(i));
+    }
+
+    @Override
+    public int getItemCount() {
+        return results.size();
+    }
+
+    public void setResults(List<Product> results) {
+        this.results = results;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        private TextView textView_nomProduit_panier_achat;
+        private TextView textView_typeCategorie_panier_achat;
+        private TextView textView_prix_panier_achat;
+        private ImageView imageView_imageProduit_panier_achat;
+        private ImageView imageView_ratingStar_panier_achat;
+        private LinearLayout LinearLayout_produit_panier_achat;
+        private ImageButton imageButton;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textView_nomProduit_panier_achat = itemView.findViewById(R.id.textView_nomProduit_panier_achat);
+            textView_typeCategorie_panier_achat = itemView.findViewById(R.id.textView_typeCategorie_panier_achat);
+            textView_prix_panier_achat = itemView.findViewById(R.id.textView_prix_panier_achat);
+            imageView_imageProduit_panier_achat = itemView.findViewById(R.id.imageView_imageProduit_panier_achat);
+            imageView_ratingStar_panier_achat = itemView.findViewById(R.id.imageView_ratingStar_panier_achat);
+            LinearLayout_produit_panier_achat = itemView.findViewById(R.id.LinearLayout_produit_panier_achat);
+            imageButton= itemView.findViewById(R.id.imageButton_panier_delete);
+
+        }
+
+        public void update(final Product entity){
+
+            textView_nomProduit_panier_achat.setText(entity.getName());
+            textView_typeCategorie_panier_achat.setText(entity.getCategory()+" > "+entity.getType());
+            textView_prix_panier_achat.setText(getPriceProduct(entity.getPrice()));
+            setImageRatingStar(imageView_ratingStar_panier_achat, entity.getRate());
+
+            Picasso.get().load(entity.getPath())
+                    .resize(150, 150)
+                    .centerCrop()
+                    .error(R.drawable.erreurpicture)
+                    .into(imageView_imageProduit_panier_achat);
+
+
+
+            LinearLayout_produit_panier_achat.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    Intent myIntent = new Intent(v.getContext(), AfficherProduitAchat.class);
+                    myIntent.putExtra("idProduct",entity.getId());
+                    myIntent.putExtra("user",user);
+                    myIntent.putExtra("devise",devise);
+                    myIntent.putExtra("rate",rate);
+                    v.getContext().startActivity(myIntent);
+                }
+            });
+
+            imageButton.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    deleteProduit(entity.getId());
+                }
+            });
+
+        }
+    }
+
+    public void setImageRatingStar(ImageView imageView,  int rate){
+        switch(rate) {
+            case 0:
+                imageView.setImageResource(R.drawable.s0);
+                break;
+            case 5:
+                imageView.setImageResource(R.drawable.s5);
+                break;
+            case 10:
+                imageView.setImageResource(R.drawable.s10);
+                break;
+            case 15:
+                imageView.setImageResource(R.drawable.s15);
+                break;
+            case 20:
+                imageView.setImageResource(R.drawable.s20);
+                break;
+            case 25:
+                imageView.setImageResource(R.drawable.s25);
+                break;
+            case 30:
+                imageView.setImageResource(R.drawable.s30);
+                break;
+            case 35:
+                imageView.setImageResource(R.drawable.s35);
+                break;
+            case 40:
+                imageView.setImageResource(R.drawable.s40);
+                break;
+            case 45:
+                imageView.setImageResource(R.drawable.s45);
+                break;
+            case 50:
+                imageView.setImageResource(R.drawable.s50);
+                break;
+            default:
+                imageView.setImageResource(R.drawable.s0);
+        }
+    }
+
+    public String getPriceProduct(Double price){
+        Double prix = price*rate;
+        DecimalFormat df = new DecimalFormat("0.00");
+        String result  = df.format(prix)+" " +devise;
+        return result ;
+    }
+
+}
+
+
+    void deleteProduit(long idProduct){
+        new AfficherPanierAchat.SupprimerProduitTask(idProduct).execute();
+    }
+
 }

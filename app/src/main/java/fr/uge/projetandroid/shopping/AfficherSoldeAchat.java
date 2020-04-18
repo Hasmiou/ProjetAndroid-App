@@ -9,8 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,9 +34,6 @@ import java.text.DecimalFormat;
 
 import fr.uge.projetandroid.LoginActivity;
 import fr.uge.projetandroid.R;
-import fr.uge.projetandroid.adapters.AdapterPanierAchat;
-import fr.uge.projetandroid.borrow.AfficherProduitEmprunt;
-import fr.uge.projetandroid.entities.RequestBorrow;
 import fr.uge.projetandroid.entities.User;
 import fr.uge.projetandroid.handlers.HttpHandler;
 
