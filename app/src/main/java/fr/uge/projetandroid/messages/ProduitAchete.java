@@ -39,7 +39,7 @@ public class ProduitAchete extends AppCompatActivity implements NavigationView.O
     private User user;
     private String devise;
     private double rate;
-
+    private Boolean ChangeCurrency=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,9 +134,11 @@ public class ProduitAchete extends AppCompatActivity implements NavigationView.O
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CharSequence charSequence = (CharSequence) parent.getItemAtPosition(position);
-                Log.e("Devise",charSequence.toString());
-                devise = charSequence.toString();
-                new ProduitAchete.ChangeCurrencyTask().execute();
+                if(ChangeCurrency){
+                    devise = charSequence.toString();
+                    new ProduitAchete.ChangeCurrencyTask().execute();
+                }
+                ChangeCurrency=true;
 
             }
 

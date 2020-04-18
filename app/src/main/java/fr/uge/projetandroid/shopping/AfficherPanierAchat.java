@@ -62,6 +62,7 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
     private User user;
     private String devise;
     private double rate;
+    private Boolean ChangeCurrency=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,9 +181,11 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CharSequence charSequence = (CharSequence) parent.getItemAtPosition(position);
-                Log.e("Devise",charSequence.toString());
-                devise = charSequence.toString();
-                new AfficherPanierAchat.ChangeCurrencyTask().execute();
+                if(ChangeCurrency){
+                    devise = charSequence.toString();
+                    new AfficherPanierAchat.ChangeCurrencyTask().execute();
+                }
+                ChangeCurrency=true;
 
             }
 
@@ -435,6 +438,7 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
         }
 
         @Override
@@ -475,6 +479,10 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog = new ProgressDialog(AfficherPanierAchat.this);
+            pDialog.setMessage("Traitement en cours...");
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
 
         @Override
@@ -492,6 +500,8 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
 
             user.setTotalPanier(0);
             total =0;
@@ -508,6 +518,10 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog = new ProgressDialog(AfficherPanierAchat.this);
+            pDialog.setMessage("Traitement en cours...");
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
 
         @Override
@@ -526,7 +540,8 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
 
-
+            if (pDialog.isShowing())
+                pDialog.dismiss();
 
             if(result==true){
                 user.setTotalPanier(0);
@@ -547,7 +562,6 @@ public class AfficherPanierAchat extends AppCompatActivity implements Navigation
             }
 
 
-            new AfficherPanierAchat.ShowProductsTask().execute();
         }
     }
 }

@@ -35,6 +35,7 @@ import java.util.List;
 import fr.uge.projetandroid.LoginActivity;
 import fr.uge.projetandroid.adapters.AdapterPanierAchat;
 import fr.uge.projetandroid.adapters.AdapterProduitsRechercheAchat;
+import fr.uge.projetandroid.adapters.AdapterWishlistAchat;
 import fr.uge.projetandroid.borrow.AjouterProduit;
 import fr.uge.projetandroid.entities.User;
 import fr.uge.projetandroid.handlers.HttpHandler;
@@ -63,6 +64,7 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
     private User user;
     private String devise;
     private double rate;
+    private Boolean ChangeCurrency=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,9 +183,12 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 CharSequence charSequence = (CharSequence) parent.getItemAtPosition(position);
-                Log.e("Devise",charSequence.toString());
-                devise = charSequence.toString();
-                new AfficherWishlistAchat.ChangeCurrencyTask().execute();
+
+                if(ChangeCurrency){
+                    devise = charSequence.toString();
+                    new AfficherWishlistAchat.ChangeCurrencyTask().execute();
+                }
+                ChangeCurrency=true;
 
             }
 
@@ -420,11 +425,11 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
-            AdapterPanierAchat adapterPanierAchat = new AdapterPanierAchat(products,user,devise,rate);
+            AdapterWishlistAchat adapterWishlistAchat  = new AdapterWishlistAchat(products,user,devise,rate);
 
             RecyclerView_wishlist_achat.setLayoutManager(new LinearLayoutManager(AfficherWishlistAchat.this));
 
-            RecyclerView_wishlist_achat.setAdapter(adapterPanierAchat);
+            RecyclerView_wishlist_achat.setAdapter(adapterWishlistAchat);
 
             textView_total_wishlist_achat.setText(getPriceProduct(total));
 
@@ -456,11 +461,11 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            AdapterPanierAchat adapterPanierAchat = new AdapterPanierAchat(products,user,devise,rate);
+            AdapterWishlistAchat adapterWishlistAchat  = new AdapterWishlistAchat(products,user,devise,rate);
 
             RecyclerView_wishlist_achat.setLayoutManager(new LinearLayoutManager(AfficherWishlistAchat.this));
 
-            RecyclerView_wishlist_achat.setAdapter(adapterPanierAchat);
+            RecyclerView_wishlist_achat.setAdapter(adapterWishlistAchat);
 
             textView_total_wishlist_achat.setText(getPriceProduct(total));
         }
@@ -478,6 +483,10 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog = new ProgressDialog(AfficherWishlistAchat.this);
+            pDialog.setMessage("Traitement en cours...");
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
 
         @Override
@@ -495,15 +504,18 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            if (pDialog.isShowing())
+                pDialog.dismiss();
             user.setTotalWishlist(0);
             total =0;
             setupBadge();
+            List<Product> res = new ArrayList<>();
 
-            AdapterPanierAchat adapterPanierAchat = new AdapterPanierAchat(products,user,devise,rate);
+            AdapterWishlistAchat adapterWishlistAchat  = new AdapterWishlistAchat(res,user,devise,rate);
 
             RecyclerView_wishlist_achat.setLayoutManager(new LinearLayoutManager(AfficherWishlistAchat.this));
 
-            RecyclerView_wishlist_achat.setAdapter(adapterPanierAchat);
+            RecyclerView_wishlist_achat.setAdapter(adapterWishlistAchat);
 
             textView_total_wishlist_achat.setText(getPriceProduct(total));
         }
@@ -514,6 +526,10 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            pDialog = new ProgressDialog(AfficherWishlistAchat.this);
+            pDialog.setMessage("Traitement en cours...");
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
 
         @Override
@@ -532,18 +548,19 @@ public class AfficherWishlistAchat extends AppCompatActivity implements Navigati
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
             user.setTotalPanier(user.getTotalPanier()+user.getTotalWishlist());
             user.setTotalWishlist(0);
             total =0;
             setupBadge();
 
-            AdapterPanierAchat adapterPanierAchat = new AdapterPanierAchat(products,user,devise,rate);
-
-            RecyclerView_wishlist_achat.setLayoutManager(new LinearLayoutManager(AfficherWishlistAchat.this));
-
-            RecyclerView_wishlist_achat.setAdapter(adapterPanierAchat);
-
-            textView_total_wishlist_achat.setText(getPriceProduct(total));
+            Intent myIntent = new Intent(AfficherWishlistAchat.this, AfficherPanierAchat.class);
+            myIntent.putExtra("user",user);
+            myIntent.putExtra("devise",devise);
+            myIntent.putExtra("rate",rate);
+            startActivity(myIntent);
         }
     }
 }

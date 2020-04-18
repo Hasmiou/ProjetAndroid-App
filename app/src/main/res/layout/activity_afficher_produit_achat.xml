@@ -19,6 +19,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,6 +27,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,8 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginEnd="8dp"
                 android:adjustViewBounds="true"
                 android:cropToPadding="false"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -109,12 +111,12 @@
 
             <LinearLayout
                 android:id="@+id/layout_boutton_achat"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -122,26 +124,30 @@
 
                 <Button
                     android:id="@+id/button_afficher_produit_ajouterPanier_achat"
-                    android:layout_width="180dp"
+                    android:layout_width="150dp"
                     android:layout_height="35dp"
                     android:layout_margin="4dp"
                     android:background="@color/colorPrimary"
-                    android:drawableLeft="@drawable/ic_add_shopping_cart_white_24dp"
+
+                    android:gravity="center_horizontal|center_vertical"
+
                     android:text="Ajouter au panier"
-                    android:textSize="11sp"
                     android:textColor="@color/colorRatingStarBackground" />
 
 
                 <Button
                     android:id="@+id/button_afficher_produit_ajouterWishlist_achat"
-                    android:layout_width="180dp"
+                    android:layout_width="160dp"
                     android:layout_height="35dp"
                     android:layout_margin="4dp"
                     android:background="@color/colorPrimary"
-                    android:drawableLeft="@drawable/ic_favorite_white_24dp"
+
+                    android:gravity="center_horizontal|center_vertical"
+
                     android:text="Ajouter au wishlist"
-                    android:textSize="11sp"
                     android:textColor="@color/colorRatingStarBackground" />
+
+
             </LinearLayout>
 
 
@@ -177,7 +183,6 @@
                     android:layout_marginBottom="4dp"
                     android:text="Les ordinateurs proposés par Apple sont réputés pour la qualité des composants utilisés, leur style, mais aussi pour l’ergonomie du système d’exploitation iOS qui n’a rien à envier à ses concurrents. " />
             </LinearLayout>
-
 
 
             <LinearLayout
