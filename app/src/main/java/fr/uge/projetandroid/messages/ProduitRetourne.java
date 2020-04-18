@@ -87,7 +87,9 @@ public class ProduitRetourne extends AppCompatActivity implements NavigationView
     }
 
     private void setupBadge() {
-        user.setTotalProduitEmprunte(user.getTotalProduitEmprunte()-1);
+        int total =user.getTotalProduitEmprunte()-1;
+        if(total<=0) total=0;
+        user.setTotalProduitEmprunte(total);
 
         if (textView_nombre_notifications_emprunt != null) {
             if (user.getTotalNotification() == 0) {

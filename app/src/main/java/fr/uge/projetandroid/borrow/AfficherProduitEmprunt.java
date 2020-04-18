@@ -172,7 +172,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
         if(read==false) new AfficherProduitEmprunt.updateNotification().execute();
         Log.e("idProductAfficher","->>"+idProduct+"");
 
-        product = new Product();
+
         url = "http://uge-webservice.herokuapp.com/api/product/"+idProduct;
         //product.setAvailable(false);
 
@@ -441,8 +441,6 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
         timePickerDebutDemandeEmprunt = new TimePickerFragment();
         timePickerFinDemandeEmprunt = new TimePickerFragment();
 
-        adapterComment = new AdapterComment(product.getComments());
-        listView_listAvis.setLayoutManager(new LinearLayoutManager(AfficherProduitEmprunt.this));
     }
 
 
@@ -655,14 +653,6 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
 
     public void changeLayoutEmprunt(){
 
-        Log.e("Step1","change1");
-
-        adapterComment.setResults(product.getComments());
-
-        listView_listAvis.setAdapter(new AdapterComment(product.getComments()));
-        Log.e("Step2","change2");
-        //Log.e("Comments : ", product.getComments().toString());
-
         if(product.isAvailable()){
             layout_demande_emprunt_boutton.setVisibility(View.GONE);
             layout_demande_emprunt_countdown.setVisibility(View.GONE);
@@ -767,7 +757,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
             String jsonStr = sh.makeServiceCall(url);
-
+            product = new Product();
 
 
             Log.e(TAG, "Response from url: " + jsonStr);
@@ -897,18 +887,22 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
             Picasso.get().load(product.getPath())
                     .error(R.drawable.erreurpicture)
                     .into(Imageproduit_emprunt);
-            /*
-            //Picasso.get().load(product.getPath())
-                    .resize(150, 150)
-                    .centerCrop()
-                    .error(R.drawable.erreurpicture)
-                    .into(Imageproduit_emprunt);
-*/
+
             textView_categorie_type_emprunt.setText(product.getCategory()+" > "+ product.getType());
             textView_nom_emprunt.setText(product.getName());
             textView_description_produit_emprunt.setText(product.getDescription());
             textView_etat_produit_emprunt.setText(product.getState());
             setImageRatingStar(imageView_ratingstar_emprunt,avgRate);
+
+
+            listView_listAvis.removeAllViews();
+            listView_listAvis = (RecyclerView)findViewById(R.id.listView_listAvis);
+
+            AdapterComment adapterCommenter = new AdapterComment(product.getComments());
+            listView_listAvis.setLayoutManager(new LinearLayoutManager(AfficherProduitEmprunt.this));
+            adapterCommenter.setResults(product.getComments());
+
+            listView_listAvis.setAdapter(adapterCommenter);
 
             changeLayoutEmprunt();
 
@@ -1206,6 +1200,7 @@ public class AfficherProduitEmprunt extends AppCompatActivity implements DatePic
             int total = user.getTotalNotification()-1;
             if(total<=0) total =0;
             user.setTotalNotification(total);
+            setupBadge();
             return null;
         }
 
