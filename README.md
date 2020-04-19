@@ -16,7 +16,7 @@ L’université Gustave Eiffel désire offrir un service de partage interne de t
 
 Détails techniques:
 
-- L’application Android est réalisée avec un SDK 28 voici les technologies que nous avons utilisé:
+L’application Android est réalisée avec un SDK 28 voici les technologies que nous avons utilisé:
 - HttpURLConnection : pour lancer des requêtes avec le service web
 - ViewPager : utilisé dans les slides d’accueil 
 - DialogFragment: pour afficher DatePickerDialog et TimePickerDialog
@@ -30,23 +30,23 @@ Le Service Web REST est codé en Java 11 avec :
 - Les frameworks Spring, Maven, Swagger (pour la documentation), la dépendance javax.mail pour l’envoie des mails. 
 - L’api : http://data.fixer.io/api/ qui nous retourne un fichier JSON des taux de conversion de toute les monnaies du monde en temps réel.
 - Une base de données MySql.
-Le service web ainsi que la base de données sont hébergées sur le serveur de heroku sur ce liens : https://uge-webservice.herokuapp.com/swagger-ui.html 
+- Le service web ainsi que la base de données sont hébergées sur le serveur de heroku sur ce liens : https://uge-webservice.herokuapp.com/swagger-ui.html 
 
 Liens Github:
 
-Android : https://github.com/mohsinebahhou/ProjetAndroid_androidApp
-Service web : https://github.com/Hasmiou/ProjetAndroidWebService
+- Android : https://github.com/mohsinebahhou/ProjetAndroid_androidApp
+- Service web : https://github.com/Hasmiou/ProjetAndroidWebService
 
 Liens de téléchargements:
-Projet Android : http://makcenter.ma/uge/projetAndroid/CodeSource/ProjetAndroid.zip
-Apk : http://makcenter.ma/uge/projetAndroid/CodeSource/app-debug.apk
-Service web : http://makcenter.ma/uge/projetAndroid/CodeSource/ProjetAndroidWebService-master.zip
+- Projet Android : http://makcenter.ma/uge/projetAndroid/CodeSource/ProjetAndroid.zip
+- Apk : http://makcenter.ma/uge/projetAndroid/CodeSource/app-debug.apk
+- Service web : http://makcenter.ma/uge/projetAndroid/CodeSource/ProjetAndroidWebService-master.zip
 
 Liens de vidéos de démonstrations : 
 
-Mohsine Bahhou : http://makcenter.ma/uge/projetAndroid/video/MohsineBahhou.mp4
-Mamadou Kanghe Balde : http://makcenter.ma/uge/projetAndroid/video/MamadouKangheBalde.mp4
-Fatima Zohra Sersouri : http://makcenter.ma/uge/projetAndroid/video/FatimaZohraSersouri.mp4
-Yasmine Mekouar : http://makcenter.ma/uge/projetAndroid/video/YasmineMekouar.mp4
-Mamadou Hassimiou Diallo : http://makcenter.ma/uge/projetAndroid/video/MamadouHassimiouDiallo.mp4
-Ahmed Bennani: http://makcenter.ma/uge/projetAndroid/video/AhmedBennani.mp4
+- Mohsine Bahhou : http://makcenter.ma/uge/projetAndroid/video/MohsineBahhou.mp4
+- Mamadou Kanghe Balde : http://makcenter.ma/uge/projetAndroid/video/MamadouKangheBalde.mp4
+- Fatima Zohra Sersouri : http://makcenter.ma/uge/projetAndroid/video/FatimaZohraSersouri.mp4
+- Yasmine Mekouar : http://makcenter.ma/uge/projetAndroid/video/YasmineMekouar.mp4
+- Mamadou Hassimiou Diallo : http://makcenter.ma/uge/projetAndroid/video/MamadouHassimiouDiallo.mp4
+- Ahmed Bennani: http://makcenter.ma/uge/projetAndroid/video/AhmedBennani.mp4
